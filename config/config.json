@@ -2,7 +2,7 @@
 	"oj-path": "/home/ubuntu/.local/share/mise/installs/python/3.11.4/bin/oj",
 	"default-contest-dirname-format": "{ContestID}",
 	"default-task-dirname-format": "{tasklabel}",
-	"default-test-dirname-format": "tests",
+	"default-test-dirname-format": "test",
 	"default-task-choice": "next",
 	"default-template": "kotlin"
 }
