@@ -1,0 +1,52 @@
+[tools]
+java = "openjdk-17"
+node = "18.16.1"
+python = "3.11.4"
+
+[tasks.install]
+run = """
+    curl -Lo kc.zip https://github.com/JetBrains/kotlin/releases/download/v1.8.20/kotlin-compiler-1.8.20.zip \
+    && unzip -d ~/.local kc.zip \
+    && rm -f kc.zip \
+    && pip install git+https://github.com/online-judge-tools/oj.git@v12.0.0 \
+    && npm install -g atcoder-cli@2.2.0
+"""
+
+[tasks."config::restore"]
+run = """
+#!/bin/bash 
+set -euo pipefail
+
+cat /workspaces/ac/config/config.json > $(acc config-dir)/config.json
+cp -r /workspaces/ac/config/kotlin $(acc config-dir)/
+"""
+
+[tasks."session:restore"]
+run = """
+#!/bin/bash 
+set -euo pipefail
+
+if [[ $(acc session | grep "not login") != "not login" ]]; then
+    echo "You are already signed in. Do nothing."
+else
+    session_file=`acc config-dir`/session.json
+    input_file=/workspaces/ac/config/session.json
+    cp $session_file ${session_file}.old
+    cat $input_file > $session_file
+    echo "Session restored from ${input_file}."
+fi
+"""
+
+[tasks."session:dump"]
+run = """
+#!/bin/bash 
+set -euo pipefail
+
+if [[ $(acc session | grep "not login") != "not login" ]]; then
+    save_file="/workspaces/ac/config/session.json"
+    cat `acc config-dir`/session.json > $save_file
+    echo "Session saved at ${save_file}"
+else
+    echo "You are NOT signed in. Do nothing."
+fi
+"""

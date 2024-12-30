@@ -1,0 +1,10 @@
+// See https://containers.dev/implementors/json_reference/ for configuration reference
+{
+  "name": "My Programming environment for AtCoder",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  // "postCreateCommand": "chmod +x .devcontainer/install.sh && .devcontainer/install.sh",
+  "remoteUser": "ubuntu"
+}
+
